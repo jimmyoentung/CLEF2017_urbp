@@ -38,8 +38,8 @@ def compute_urbp(query_ids, runs, qrels, persists, depth, judgements_score):
 
                 try:
                     judgement = judgements_score[qrel_key]
-                except KeyError:
-                    judgement = 1
+                except:
+                    judgement = 0
 
                 try:
                     if qrels[qrel_key] > 0:

@@ -1,7 +1,7 @@
 """
 Created by Jimmy (April 2017)
-Implementation of Rank-Biased Precision based on: "Rank-Biased Precision for Measurement of Retrieval Effectiveness",
-Moffat, A. and Zobel, J., ACM Transactions on Information Systems, Vol. 27, No. 1, Article 2, December 2008.
+Implementation of understandability Rank-Biased Precision (uRBP) based on: "Integrating Understandability in
+the Evaluation of Consumer Health Search Engines", Zuccon and Koopman, ACM SIGIR 2014..
 """
 
 import run
@@ -15,8 +15,9 @@ import argparse
 # read parameters
 parser = argparse.ArgumentParser()
 
-parser.add_argument("files", help="USAGE: [options] <qrels-file> <run-file> <judgement file 1, e.g.,qrels-file> .. "
-                                  "<judgement file n, e.g.,understandability-file>",
+parser.add_argument("files", help="USAGE: [options] <qrels-file> <run-file> <qrels-file> "
+                                  "<judgement file 1> <interpretation 1> .. <judgement file n> <interpretation n>."
+                                  "Where interpretation option are: H = Higher is better or L = Lower is better",
                     action="store", nargs="*")
 
 parser.add_argument("-d",
@@ -83,17 +84,24 @@ else:
 # initialise judgements files which could be understandability, readability or other judgement files
 judgements_score = dict()
 
-if len(args.files) >= 2:
+if len(args.files) >= 3 and len(args.files) % 2 == 0:
     qrels_path = args.files[0]
     runs_path = args.files[1]
 
     qrels = qrel.load_qrels(qrels_path, relevance_threshold)
 
-    for i in range(2, len(args.files), 1):
-        judgements.load_judgements(args.files[i], judgements_score)
+
+    # parse the judgement and interpretation. started from the files argument number 3 (index = 2)
+    i = 2
+    while i < len(args.files):
+        judgementFile = args.files[i]
+        interpretation = args.files[i+1]
+        judgements.load_judgements(judgementFile, interpretation, judgements_score)
+        i += 2
+
 else:
-    raise NameError("Missing required parameter(s): path to run file and at least 1 (one) judgement file, e.g., qrels, "
-                    "understandability!")
+    raise NameError("Missing required parameter(s): path to run file, qrel file and at least 1 (one) judgement file "
+                    "plus 1 (one interpretation), e.g., understandability H, thrustwortiness L, etc. !")
 
 
 # Check if the params are not printing detail and overall then there will be no output. so raise error
