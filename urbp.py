@@ -1,7 +1,7 @@
 """
 Created by Jimmy (April 2017)
-Implementation of Rank-Biased Precision based on: "Rank-Biased Precision for Measurement of Retrieval Effectiveness",
-Moffat, A. and Zobel, J., ACM Transactions on Information Systems, Vol. 27, No. 1, Article 2, December 2008.
+Implementation of understandability Rank-Biased Precision (uRBP) based on: "Integrating Understandability in
+the Evaluation of Consumer Health Search Engines", Zuccon and Koopman, ACM SIGIR 2014.
 """
 
 from collections import namedtuple

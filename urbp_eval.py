@@ -17,7 +17,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("files", help="USAGE: [options] <qrels-file> <run-file> <qrels-file> "
                                   "<judgement file 1> <interpretation 1> .. <judgement file n> <interpretation n>."
-                                  "Where interpretation option are: H = Higher is better or L = Lower is better",
+                                  "Where interpretation options are: H = Higher is better or L = Lower is better",
                     action="store", nargs="*")
 
 parser.add_argument("-d",
@@ -118,11 +118,11 @@ rbps, all_rbps = urbp.compute_urbp(query_ids, runs, qrels, persists, depth, judg
 
 if print_detail:
     for rbp in rbps:
-        print("p= {0:.2f} q= {1} d= {2} rbp= {3:.4f} + {4:.4f}".format(rbp.persist, rbp.q, rbp.d, rbp.score, rbp.err))
+        print("p= {0:.2f} q= {1} d= {2} uRBP= {3:.4f} + {4:.4f}".format(rbp.persist, rbp.q, rbp.d, rbp.score, rbp.err))
 
 if print_overall:
     for rbp in all_rbps:
-        print("p= {0:.2f} q= {1} d= {2} rbp= {3:.4f} + {4:.4f}".format(rbp.persist, rbp.q, rbp.d, rbp.score, rbp.err))
+        print("p= {0:.2f} q= {1} d= {2} uRBP= {3:.4f} + {4:.4f}".format(rbp.persist, rbp.q, rbp.d, rbp.score, rbp.err))
 
 
 print("Duration ", time.time()-startTime)
